@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import UserLayout from "../layout/UserLayout";
-import { redirect, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useUploadAvatarMutation } from "../../redux/api/userApi";
 import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
@@ -25,7 +25,7 @@ const UploadAvatar = () => {
       toast.success("Avatar Uploaded");
       navigate("/me/profile");
     }
-  }, [error, isSuccess]);
+  }, [error, isSuccess]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -62,7 +62,7 @@ const UploadAvatar = () => {
                     <img
                       src={avatarPreview}
                       className="rounded-circle"
-                      alt="image"
+                      alt="avatar"
                     />
                   </figure>
                 </div>

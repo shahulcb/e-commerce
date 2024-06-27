@@ -8,7 +8,7 @@ import { useLazyLogoutQuery } from "../../redux/api/authApi";
 const Header = () => {
   const navigate = useNavigate();
   const { isLoading } = useGetMeQuery();
-  const [logout, { data }] = useLazyLogoutQuery();
+  const [logout] = useLazyLogoutQuery();
 
   const { user } = useSelector((state) => state.auth);
 

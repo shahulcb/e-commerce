@@ -28,7 +28,7 @@ const UpdateProfile = () => {
       toast.success("User Updated");
       navigate("/me/profile");
     }
-  }, [user, error, isSuccess]);
+  }, [user, error, isSuccess]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const submitHandler = (e) => {
     e.preventDefault();

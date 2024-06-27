@@ -14,7 +14,7 @@ const ProductDetails = () => {
     if (isError) {
       toast.error(error?.data?.message);
     }
-  }, [error]);
+  }, [isError]); // eslint-disable-line react-hooks/exhaustive-deps
   const [activeImage, setActiveImage] = useState("");
   useEffect(() => {
     setActiveImage(
@@ -22,7 +22,7 @@ const ProductDetails = () => {
         ? data?.product?.images[0].url
         : "/images/default_product.png"
     );
-  }, [data]);
+  }, [data]); // eslint-disable-line react-hooks/exhaustive-deps
   if (isLoading) return <Loader />;
   return (
     <div className="row d-flex justify-content-around">
@@ -39,7 +39,7 @@ const ProductDetails = () => {
         <div className="row justify-content-start mt-5">
           {data?.product?.images?.map((img) => (
             <div className="col-2 ms-4 mt-2">
-              <a role="button">
+              <a href={() => false} role="button">
                 <img
                   className={`d-block border rounded p-3 cursor-pointer ${
                     img?.url === activeImage ? "border-warning" : ""

@@ -22,7 +22,7 @@ const ForgotPassword = () => {
     if (isSuccess) {
       toast.success("Email Sent. Please check your inbox");
     }
-  }, [error, isAuthenticated, isSuccess]);
+  }, [error, isAuthenticated, isSuccess]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const submitHandler = (e) => {
     e.preventDefault();

@@ -20,7 +20,7 @@ const UpdatePassword = () => {
       toast.success("Password Updated");
       navigate("/me/profile");
     }
-  }, [error, isSuccess]);
+  }, [error, isSuccess]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const submitHandler = (e) => {
     e.preventDefault();

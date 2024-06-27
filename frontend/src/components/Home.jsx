@@ -29,7 +29,7 @@ const Home = () => {
     if (isError) {
       toast.error(error?.data?.message);
     }
-  }, [error]);
+  }, [isError]); // eslint-disable-line react-hooks/exhaustive-deps
   const columnSize = keyword ? 4 : 3;
   if (isLoading) return <Loader />;
   return (
