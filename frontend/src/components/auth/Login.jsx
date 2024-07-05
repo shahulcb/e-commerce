@@ -2,11 +2,14 @@ import React, { useEffect, useState } from "react";
 import MetaData from "../layout/MetaData";
 import { useLoginMutation } from "../../redux/api/authApi";
 import toast from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 const Login = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [login, { isLoading, error }] = useLoginMutation();
@@ -16,7 +19,7 @@ const Login = () => {
   useEffect(() => {
     if (isAuthenticated) {
       toast.success("Logged in successfully");
-      navigate("/");
+      navigate(from, { replace: true });
     }
     if (error) {
       toast.error(error?.data?.message);
