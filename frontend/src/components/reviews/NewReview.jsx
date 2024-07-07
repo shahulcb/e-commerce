@@ -5,6 +5,7 @@ import {
   useSubmitReviewMutation,
 } from "../../redux/api/productsApi";
 import toast from "react-hot-toast";
+import Loader from "../layout/Loader";
 
 const NewReview = ({ productId }) => {
   const [rating, setRating] = useState(0);
@@ -27,6 +28,8 @@ const NewReview = ({ productId }) => {
       toast.success("Review Posted");
     }
   }, [error, isSuccess]);
+
+  if (isLoading) return <Loader />;
   return (
     <div>
       {canReview && (

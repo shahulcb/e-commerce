@@ -13,14 +13,7 @@ const Invoice = () => {
   const { data, isLoading, error } = useOrderDetailsQuery(params?.id);
   const order = data?.order || {};
 
-  const {
-    shippingInfo,
-    orderItems,
-    paymentInfo,
-    user,
-    totalAmount,
-    orderStatus,
-  } = order;
+  const { shippingInfo, orderItems, paymentInfo, user } = order;
 
   useEffect(() => {
     if (error) {

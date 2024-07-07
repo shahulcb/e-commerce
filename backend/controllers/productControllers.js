@@ -3,6 +3,7 @@ import Product from "../models/product.js";
 import ErrorHandler from "../utils/errorHandler.js";
 import APIFilters from "../utils/apiFilters.js";
 import Order from "../models/order.js";
+import { delete_file, upload_file } from "../utils/cloudinary.js";
 
 export const getProducts = catchAsyncErrors(async (req, res) => {
   const resPerPage = 4;
@@ -50,6 +51,9 @@ export const deleteProduct = catchAsyncErrors(async (req, res, next) => {
   let product = await Product.findById(req?.params?.id);
   if (!product) {
     return next(new ErrorHandler("Product not found", 404));
+  }
+  for (let i = 0; i < product?.images?.length; i++) {
+    await delete_file(product?.images[i].public_id);
   }
   await product.deleteOne();
   res.status(200).json({ message: "Product deleted" });
@@ -138,5 +142,52 @@ export const canUserReview = catchAsyncErrors(async (req, res, next) => {
   }
   res.status(200).json({
     canReview: true,
+  });
+});
+
+export const getAdminProducts = catchAsyncErrors(async (req, res, next) => {
+  const products = await Product.find();
+  res.status(200).json({
+    products,
+  });
+});
+
+export const uploadProductImages = catchAsyncErrors(async (req, res, next) => {
+  const product = await Product.findById(req?.params?.id);
+
+  if (!product) {
+    return next(new ErrorHandler("Product not found", 404));
+  }
+  const uploader = async (image) => upload_file(image, "multishop/products");
+
+  const urls = await Promise.all((req?.body?.images).map(uploader));
+
+  product?.images?.push(...urls);
+
+  await product?.save();
+
+  res.status(200).json({
+    product,
+  });
+});
+
+export const deleteProductImage = catchAsyncErrors(async (req, res, next) => {
+  const product = await Product.findById(req?.params?.id);
+
+  if (!product) {
+    return next(new ErrorHandler("Product not found", 404));
+  }
+
+  const isDeleted = await delete_file(req.body.imgId);
+
+  if (isDeleted) {
+    product.images = product?.images?.filter(
+      (img) => img.public_id !== req.body.imgId
+    );
+    await product?.save();
+  }
+
+  res.status(200).json({
+    product,
   });
 });
