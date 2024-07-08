@@ -96,7 +96,7 @@ const ProductReviews = () => {
   if (isLoading) return <Loader />;
   return (
     <AdminLayout>
-      <MetaData />
+      <MetaData title={"Product Reviews"} />
       <div className="row justify-content-center my-5">
         <div className="col-6">
           <form onSubmit={submitHandler}>

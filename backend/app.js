@@ -9,13 +9,21 @@ import orderRoutes from "./routes/order.js";
 import paymentRoutes from "./routes/payment.js";
 import errorMiddleware from "./middlewares/errors.js";
 
+import path from "path";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 // handle uncaught exceptions
 process.on("uncaughtException", (err) => {
   console.log(`ERROR ${err}`);
   console.log("Shutting down server due to unhandled uncaught exceptions");
 });
 
-dotenv.config({ path: "backend/config/config.env" });
+if (process.env.NODE_ENV === "PRODUCTION") {
+  dotenv.config({ path: "backend/config/config.env" });
+}
 
 //Connection database
 connectDatabase();
@@ -34,6 +42,13 @@ app.use("/api/v1", productRoutes);
 app.use("/api/v1", authRoutes);
 app.use("/api/v1", orderRoutes);
 app.use("/api/v1", paymentRoutes);
+
+if (process.env.NODE_ENV === "PRODUCTION") {
+  app.use(express.static(path.join(__dirname, "../frontend/build")));
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "../frontend/build/index.html"));
+  });
+}
 
 //error middleware
 app.use(errorMiddleware);

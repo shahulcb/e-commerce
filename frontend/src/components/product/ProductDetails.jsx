@@ -9,6 +9,7 @@ import { setCartItems } from "../../redux/features/cartSlice";
 import MetaData from "../layout/MetaData";
 import NewReview from "../reviews/NewReview";
 import ListReviews from "../reviews/ListReviews";
+import NotFound from "../layout/NotFound";
 
 const ProductDetails = () => {
   const params = useParams();
@@ -56,6 +57,10 @@ const ProductDetails = () => {
     toast.success("Item added to cart");
   };
   if (isLoading) return <Loader />;
+
+  if (error && error?.status === 404) {
+    return <NotFound />;
+  }
   return (
     <>
       <MetaData title={data?.product?.name} />

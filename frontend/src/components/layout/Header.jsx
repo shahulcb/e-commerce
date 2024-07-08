@@ -26,7 +26,7 @@ const Header = () => {
             href="/"
             className="d-flex align-items-center justify-content-center justify-content-lg-start text-decoration-none"
           >
-            <p className="m-0 text-white font-weight-bold">MULTI SHOP</p>
+            <p className="m-0 font-weight-bold text-dark">MULTI SHOP</p>
           </a>
         </div>
       </div>
@@ -36,7 +36,7 @@ const Header = () => {
       <div className="col-12 col-md-3 mt-4 mt-md-0 text-center">
         <a href="/cart" style={{ textDecoration: "none" }}>
           <span id="cart" className="ms-3">
-            Cart
+            <i class="fas fa-shopping-cart"></i>
           </span>
           <span className="ms-1" id="cart_count">
             {cartItems.length}
@@ -45,7 +45,7 @@ const Header = () => {
         {user ? (
           <div className="ms-4 dropdown">
             <button
-              className="btn dropdown-toggle text-white"
+              className="btn dropdown-toggle"
               type="button"
               id="dropDownMenuButton"
               data-bs-toggle="dropdown"
