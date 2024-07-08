@@ -44,7 +44,7 @@ const UploadImages = () => {
       toast.success("Images Uploaded");
       navigate("/admin/products");
     }
-  }, [data, error, isSuccess, deleteError]);
+  }, [data, error, isSuccess, deleteError]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const onChange = (e) => {
     const files = Array.from(e.target.files);
@@ -61,7 +61,7 @@ const UploadImages = () => {
   };
 
   const handleImagePreviewDelete = (image) => {
-    const filteredImagesPreview = imagesPreview.filter((img) => img != image);
+    const filteredImagesPreview = imagesPreview.filter((img) => img !== image);
     setImages(filteredImagesPreview);
     setImagesPreview(filteredImagesPreview);
   };

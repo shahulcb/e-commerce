@@ -65,14 +65,21 @@ export const updateOrder = catchAsyncErrors(async (req, res, next) => {
   if (order?.orderStatus === "Delivered") {
     return next(new ErrorHandler("You have already delivered this order", 400));
   }
-  order?.orderItems?.forEach(async (item) => {
+  let productNotFound = false;
+  for (const item of order.orderItems) {
     const product = await Product.findById(item?.product?.toString());
     if (!product) {
-      return next(new ErrorHandler("No Order found with this ID", 404));
+      productNotFound = true;
+      break;
     }
     product.stock = product.stock - item.quantity;
     await product.save({ validateBeforeSave: false });
-  });
+  }
+
+  if (productNotFound) {
+    return next(new ErrorHandler("No Order found with one or more IDs.", 404));
+  }
+
   order.orderStatus = req.body.status;
   order.deliveredAt = Date.now();
   await order.save();

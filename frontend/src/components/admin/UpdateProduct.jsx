@@ -50,7 +50,7 @@ const UpdateProduct = () => {
       toast.success("Product updated");
       navigate("/admin/products");
     }
-  }, [error, isSuccess, data]);
+  }, [error, isSuccess, data]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const submitHandler = (e) => {
     e.preventDefault();

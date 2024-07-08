@@ -25,7 +25,7 @@ const Dashboard = () => {
         endDate: endDate.toISOString(),
       });
     }
-  }, [error]);
+  }, [error]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const submitHandler = () => {
     getDashboardSales({

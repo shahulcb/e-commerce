@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 import { PRODUCT_CATEGORIES } from "../../constants/constants";
 import { useCreateProductMutation } from "../../redux/api/productsApi";
 import toast from "react-hot-toast";
-import Loader from "../layout/Loader";
 
 const NewProduct = () => {
   const navigate = useNavigate();
@@ -35,7 +34,7 @@ const NewProduct = () => {
       toast.success("Product created");
       navigate("/admin/products");
     }
-  }, [error, isSuccess]);
+  }, [error, isSuccess]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const submitHandler = (e) => {
     e.preventDefault();
