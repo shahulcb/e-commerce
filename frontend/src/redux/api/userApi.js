@@ -4,7 +4,9 @@ import { setIsAuthenticated, setLoading, setUser } from "../features/userSlice";
 export const userApi = createApi({
   reducerPath: "userApi",
   tagTypes: ["User", "AdminUsers", "AdminUser"],
-  baseQuery: fetchBaseQuery({ baseUrl: "/api/v1" }),
+  baseQuery: fetchBaseQuery({
+    baseUrl: `${process.env.REACT_APP_API_URL}/api/v1`,
+  }),
   endpoints: (builder) => ({
     getMe: builder.query({
       query: () => "/me",
