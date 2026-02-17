@@ -8,6 +8,14 @@ import authRoutes from "./routes/auth.js";
 import orderRoutes from "./routes/order.js";
 import paymentRoutes from "./routes/payment.js";
 import errorMiddleware from "./middlewares/errors.js";
+import cors from "cors";
+
+app.use(
+  cors({
+    origin: process.env.FRONTEND_URL,
+    credentials: true,
+  }),
+);
 
 import path from "path";
 import { fileURLToPath } from "url";
@@ -34,7 +42,7 @@ app.use(
     verify: (req, res, buf) => {
       req.rawBody = buf.toString();
     },
-  })
+  }),
 );
 app.use(cookieParser());
 //routes
@@ -55,7 +63,7 @@ app.use(errorMiddleware);
 
 const server = app.listen(process.env.PORT, () => {
   console.log(
-    `Server started on PORT: ${process.env.PORT} in ${process.env.NODE_ENV}`
+    `Server started on PORT: ${process.env.PORT} in ${process.env.NODE_ENV}`,
   );
 });
 
