@@ -4,6 +4,7 @@ export const productsApi = createApi({
   reducerPath: "productApi",
   baseQuery: fetchBaseQuery({
     baseUrl: `${process.env.REACT_APP_API_URL}/api/v1`,
+    credentials: "include",
   }),
   tagTypes: ["Product", "AdminProducts", "Reviews"],
   endpoints: (builder) => ({

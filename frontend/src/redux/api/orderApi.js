@@ -4,6 +4,7 @@ export const orderApi = createApi({
   reducerPath: "orderApi",
   baseQuery: fetchBaseQuery({
     baseUrl: `${process.env.REACT_APP_API_URL}/api/v1`,
+    credentials: "include",
   }),
   tagTypes: ["Order", "AdminOrders"],
   endpoints: (builder) => ({

@@ -6,6 +6,7 @@ export const userApi = createApi({
   tagTypes: ["User", "AdminUsers", "AdminUser"],
   baseQuery: fetchBaseQuery({
     baseUrl: `${process.env.REACT_APP_API_URL}/api/v1`,
+    credentials: "include",
   }),
   endpoints: (builder) => ({
     getMe: builder.query({
