@@ -37,6 +37,8 @@ export const logout = catchAsyncErrors(async (req, res, next) => {
   res.cookie("token", null, {
     expires: new Date(Date.now()),
     httpOnly: true,
+    secure: process.env.NODE_ENV === "PRODUCTION",
+    sameSite: process.env.NODE_ENV === "PRODUCTION" ? "none" : "lax",
   });
   res.status(200).json({
     message: "Logged Out",
@@ -84,8 +86,8 @@ export const resetPassword = catchAsyncErrors(async (req, res, next) => {
     return next(
       new ErrorHandler(
         "Password reset token is invalid or has been expired",
-        400
-      )
+        400,
+      ),
     );
   }
   if (req.body.password !== req.body.confirmPassword) {
@@ -137,7 +139,7 @@ export const updateProfile = catchAsyncErrors(async (req, res, next) => {
 export const uploadAvatar = catchAsyncErrors(async (req, res, next) => {
   const avatarResponse = await upload_file(
     req.body.avatar,
-    "/multishop/avatars"
+    "/multishop/avatars",
   );
   if (req?.user?.avatar?.url) {
     await delete_file(req?.user?.avatar?.public_id);
@@ -161,7 +163,7 @@ export const getUserDetails = catchAsyncErrors(async (req, res, next) => {
   const user = await User.findById(req.params.id);
   if (!user) {
     return next(
-      new ErrorHandler(`User not found with id: ${req.params.id}`, 404)
+      new ErrorHandler(`User not found with id: ${req.params.id}`, 404),
     );
   }
   res.status(200).json({
@@ -187,7 +189,7 @@ export const deleteUser = catchAsyncErrors(async (req, res, next) => {
   const user = await User.findById(req.params.id);
   if (!user) {
     return next(
-      new ErrorHandler(`User not found with id: ${req.params.id}`, 404)
+      new ErrorHandler(`User not found with id: ${req.params.id}`, 404),
     );
   }
   if (user?.avatar?.public_id) {
